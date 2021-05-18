@@ -101,13 +101,23 @@ class LinearRegression {
         let tm1 = 0;
         let tm2 = 0;
         let j = 1;
+        let corr = this.corr_features;
+
 
         for (let i=0; i < this.anomaly_report.length; i++) {
             dis = this.anomaly_report[i].description;
-            tm1 = this.anomaly_report[i].timestep;
-            while (this.anomaly_report[j].description == dis) {
+            tm1 = parseInt(this.anomaly_report[i].timestep);
+            tm2 = tm1 + 1;
+            let lastAno = true;
+
+            while (lastAno && j < this.anomaly_report.length) {
+                if (dis === this.anomaly_report[j].description && tm2 === parseInt(this.anomaly_report[j].timestep)) {
+                    i = j;
+                    tm2 = parseInt(this.anomaly_report[j].timestep) + 1;
+                } else {
+                    lastAno = false;
+                }
                 j++;
-                tm2 = this.anomaly_report[i].timestep + 1;
             }
 
             span += tm1.toString() + " " + tm2.toString() + " " + dis + "\n";
