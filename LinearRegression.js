@@ -101,8 +101,10 @@ class LinearRegression {
         let tm1 = 0;
         let tm2 = 0;
         let j = 1;
-        let corr = this.corr_features;
 
+        if (this.anomaly_report.length===0) {
+            return "noSpan";
+        }
 
         for (let i=0; i < this.anomaly_report.length; i++) {
             dis = this.anomaly_report[i].description;
