@@ -1,5 +1,4 @@
 const net = require("net");
-const fs = require('fs');
 const regression = require("./LinearRegression");
 const hybrid = require("./HybridAD")
 const port = 5000;
@@ -44,7 +43,7 @@ server.on('connection', function(socket) {
                 }
 
             }
-            else if (anomaly) { // anomaly
+            else if (anomaly) { // anomaly detect
                 d += chunk;
                 let d_index2 = chunk.indexOf('done');
                 if (d_index2 > -1) {
@@ -76,13 +75,19 @@ server.on('connection', function(socket) {
                     case "8":
                         socket.end();
                         break;
+                    default:
+                        // another detect if not happy with first one.
+                        d="";
+                        d += str + '\n';
+                        anomaly = true;
+
                 }
             }
 
 
             /////////////////////////////////////////////
             chunk = chunk.substring(d_index + 1); // Cuts off the processed chunk
-            d_index = chunk.indexOf('\n'); // Find the new delimiter
+            d_index = chunk.indexOf('\n'); // Find the new \n
         }
 
 
