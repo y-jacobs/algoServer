@@ -75,7 +75,7 @@ server.on('connection', function(socket) {
                     case "8":
                         socket.end();
                         break;
-                    default:
+                    case algo.parser.title:
                         // another detect if not happy with first one.
                         d="";
                         d += str + '\n';

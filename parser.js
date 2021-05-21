@@ -5,6 +5,8 @@ const csv = require('csv-string');
 class parser {
     constructor(obj) {
         this.data = csv.parse(obj.slice(0, -5));
+        let d_index = obj.indexOf('\n'); // Find the new \n
+        this.title = obj.substring(0, d_index); // Cuts off the processed chunk
         this.colNames = this.data[0];
         this.cols_size = this.colNames.length; // get the number of keys in obj
         this.rows_count(); // set this.size to be the max number of rows there is in obj
